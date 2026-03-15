@@ -1,36 +1,23 @@
 return {
   {
-    "nvim-telescope/telescope.nvim",
-    branch = "0.1.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
-        cond = function()
-          return vim.fn.executable("make") == 1
-        end,
-      },
-    },
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      local telescope = require("telescope")
-      local actions = require("telescope.actions")
-
-      telescope.setup({
-        defaults = {
-          mappings = {
-            i = {
-              ["<C-k>"] = actions.move_selection_previous,
-              ["<C-j>"] = actions.move_selection_next,
-              ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-              ["<esc>"] = actions.close,
-            },
+      require("fzf-lua").setup({
+        keymap = {
+          fzf = {
+            ["ctrl-k"] = "up",
+            ["ctrl-j"] = "down",
+            ["ctrl-q"] = "select-all+accept",
           },
-          file_ignore_patterns = { ".git/", "node_modules/", "*.class" },
+        },
+        files = {
+          fd_opts = "--exclude .git --exclude node_modules --exclude '*.class'",
+        },
+        grep = {
+          rg_opts = "--glob '!.git' --glob '!node_modules'",
         },
       })
-
-      pcall(telescope.load_extension, "fzf")
     end,
   },
 }

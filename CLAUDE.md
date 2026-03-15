@@ -22,16 +22,20 @@ lazy.nvim auto-discovers all files under `lua/plugins/` — adding a new plugin 
 | `colorscheme.lua` | tokyonight (loaded eagerly, priority 1000) |
 | `ui.lua` | lualine, nvim-web-devicons, which-key |
 | `filetree.lua` | neo-tree v3 |
-| `telescope.lua` | telescope + fzf-native (requires `make` at build time) |
-| `treesitter.lua` | nvim-treesitter (cpp, c, gdscript, lua, vim, vimdoc) |
-| `lsp.lua` | mason → mason-lspconfig → nvim-lspconfig (clangd for C++, gdscript for Godot) |
+| `telescope.lua` | fzf-lua (replaces telescope) |
+| `treesitter.lua` | nvim-treesitter (cpp, c, gdscript, c_sharp, lua, vim, vimdoc) |
+| `lsp.lua` | mason → mason-lspconfig → nvim-lspconfig (clangd, csharp_ls, gdscript) |
 | `completion.lua` | nvim-cmp + LuaSnip + friendly-snippets |
 
 ## LSP specifics
 
-**C++**: clangd is installed via Mason. Needs a `compile_commands.json` or `.clangd` file at the project root for header resolution.
+LSP uses **Neovim 0.11+ native `vim.lsp.config`/`vim.lsp.enable`** — not nvim-lspconfig. All three servers are configured in `lua/plugins/lsp.lua`.
 
-**GDScript**: `lspconfig.gdscript` connects to Godot's built-in LSP server (port 6005 for Godot 4, 6008 for Godot 3). Godot must be running with the project open for the LSP to connect.
+**C++**: clangd via Mason. Needs `compile_commands.json` or `.clangd` at the project root for header resolution.
+
+**C# / Unity**: csharp-ls via Mason (requires .NET SDK). Root is detected by finding a `.sln` or `.csproj` file. For Unity projects, regenerate `.csproj` files via Edit → Preferences → External Tools → Regenerate project files.
+
+**GDScript**: Connects to Godot's built-in LSP (port 6005 for Godot 4, 6008 for Godot 3). Godot must be running with the project open.
 
 ## Adding plugins
 
@@ -45,4 +49,4 @@ return {
 
 ## Applying changes
 
-Changes to Lua files take effect after restarting Neovim or running `:source %` on `init.lua`. Plugin changes (add/remove) require `:Lazy sync`. Mason-installed tools update via `:MasonUpdate`.
+Changes to Lua files take effect after restarting Neovim or `:source %` on `init.lua`. Plugin changes (add/remove) require `:Lazy sync`. Mason-installed tools update via `:MasonUpdate`.

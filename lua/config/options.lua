@@ -1,5 +1,10 @@
 local opt = vim.opt
 
+-- Compatibility shim: ft_to_lang was removed in Neovim 0.11
+if vim.treesitter.language.ft_to_lang == nil then
+  vim.treesitter.language.ft_to_lang = vim.treesitter.language.get_lang
+end
+
 -- Line numbers
 opt.number = true
 opt.relativenumber = true

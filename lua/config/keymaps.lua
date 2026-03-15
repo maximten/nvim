@@ -13,12 +13,12 @@ map("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 map("n", "<leader>e", "<cmd>Neotree toggle<cr>", { desc = "Toggle file tree" })
 map("n", "<leader>o", "<cmd>Neotree focus<cr>", { desc = "Focus file tree" })
 
--- Telescope (quick file access)
-map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
-map("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
-map("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Find buffers" })
-map("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Recent files" })
-map("n", "<leader>fs", "<cmd>Telescope grep_string<cr>", { desc = "Grep string under cursor" })
+-- fzf-lua (quick file access)
+map("n", "<leader>ff", "<cmd>FzfLua files<cr>", { desc = "Find files" })
+map("n", "<leader>fg", "<cmd>FzfLua live_grep<cr>", { desc = "Live grep" })
+map("n", "<leader>fb", "<cmd>FzfLua buffers<cr>", { desc = "Find buffers" })
+map("n", "<leader>fr", "<cmd>FzfLua oldfiles<cr>", { desc = "Recent files" })
+map("n", "<leader>fs", "<cmd>FzfLua grep_cword<cr>", { desc = "Grep string under cursor" })
 
 -- Buffer navigation
 map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
