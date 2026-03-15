@@ -1,22 +1,3 @@
--- Shared LSP on-attach keymaps
-local function on_attach(client, bufnr)
-  local map = function(keys, func, desc)
-    vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
-  end
-  map("gd", vim.lsp.buf.definition, "Go to definition")
-  map("<leader>D", vim.lsp.buf.type_definition, "Type definition")
-  map("gr", vim.lsp.buf.references, "Find references")
-  map("gi", vim.lsp.buf.implementation, "Go to implementation")
-  map("gD", vim.lsp.buf.declaration, "Go to declaration")
-  map("K", vim.lsp.buf.hover, "Hover docs")
-  map("<leader>ca", vim.lsp.buf.code_action, "Code action")
-  map("<leader>rn", vim.lsp.buf.rename, "Rename symbol")
-  map("<leader>ds", vim.lsp.buf.document_symbol, "Document symbols")
-  map("[d", vim.diagnostic.goto_prev, "Previous diagnostic")
-  map("]d", vim.diagnostic.goto_next, "Next diagnostic")
-  map("<leader>dl", "<cmd>FzfLua diagnostics_document<cr>", "List diagnostics")
-end
-
 return {
   -- Mason: LSP/tool installer
   {
@@ -52,14 +33,13 @@ return {
           "/home/doshirak/Tools/Roslyn/content/LanguageServer/linux-x64/Microsoft.CodeAnalysis.LanguageServer.dll",
         },
         config = {
-          on_attach = on_attach,
           capabilities = require("cmp_nvim_lsp").default_capabilities(),
         },
       })
     end,
   },
 
-  -- C++ via clangd + shared diagnostic config
+  -- C++ via clangd + diagnostic config
   {
     "hrsh7th/cmp-nvim-lsp",
     dependencies = {
@@ -77,9 +57,30 @@ return {
         float = { border = "rounded" },
       })
 
+      -- LspAttach autocmd: the reliable way to set LSP keymaps in Neovim 0.11+
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local bufnr = args.buf
+          local map = function(keys, func, desc)
+            vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+          end
+          map("gd", vim.lsp.buf.definition, "Go to definition")
+          map("<leader>D", vim.lsp.buf.type_definition, "Type definition")
+          map("gr", vim.lsp.buf.references, "Find references")
+          map("gi", vim.lsp.buf.implementation, "Go to implementation")
+          map("gD", vim.lsp.buf.declaration, "Go to declaration")
+          map("K", vim.lsp.buf.hover, "Hover docs")
+          map("<leader>ca", vim.lsp.buf.code_action, "Code action")
+          map("<leader>rn", vim.lsp.buf.rename, "Rename symbol")
+          map("<leader>ds", vim.lsp.buf.document_symbol, "Document symbols")
+          map("[d", vim.diagnostic.goto_prev, "Previous diagnostic")
+          map("]d", vim.diagnostic.goto_next, "Next diagnostic")
+          map("<leader>dl", "<cmd>FzfLua diagnostics_document<cr>", "List diagnostics")
+        end,
+      })
+
       vim.lsp.config("clangd", {
         capabilities = capabilities,
-        on_attach = on_attach,
         cmd = {
           "clangd",
           "--background-index",
