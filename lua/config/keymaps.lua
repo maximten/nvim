@@ -42,3 +42,9 @@ map("n", "N", "Nzzzv")
 -- Indent stay in visual
 map("v", "<", "<gv")
 map("v", ">", ">gv")
+
+-- Comment
+map("n", "<C-/>", "gcc", { desc = "Toggle comment", remap = true })
+map("v", "<C-/>", "gc", { desc = "Toggle comment", remap = true })
+map("n", "<C-_>", "gcc", { desc = "Toggle comment", remap = true })
+map("v", "<C-_>", "gc", { desc = "Toggle comment", remap = true })
