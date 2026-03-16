@@ -12,5 +12,8 @@ return {
       { "nvim-treesitter/nvim-treesitter", lazy = false },
     },
     ft = { "gdscript", "gd", "gdshader" },
+    config = function()
+      require("godotdev").setup({})
+    end,
   },
 }
