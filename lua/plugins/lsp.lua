@@ -92,6 +92,14 @@ return {
         root_markers = { "compile_commands.json", ".clangd", ".git" },
       })
       vim.lsp.enable("clangd")
+
+      vim.lsp.config("gdscript", {
+        capabilities = capabilities,
+        cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
+        filetypes = { "gdscript" },
+        root_markers = { "project.godot" },
+      })
+      vim.lsp.enable("gdscript")
     end,
   },
 }

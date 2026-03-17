@@ -20,6 +20,8 @@ return {
           filtered_items = {
             hide_dotfiles = false,
             hide_gitignored = false,
+            ignore_files = { ".uid", ".tscn" },
+            never_show = { ".uid", ".tscn" },
           },
           follow_current_file = {
             enabled = true,

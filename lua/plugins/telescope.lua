@@ -12,7 +12,7 @@ return {
           },
         },
         files = {
-          fd_opts = "--exclude .git --exclude node_modules --exclude '*.class'",
+          fd_opts = "--exclude .git --exclude node_modules --exclude '*.class' --exclude '*.uid'",
         },
         grep = {
           rg_opts = "--glob '!.git' --glob '!node_modules'",
