@@ -18,6 +18,21 @@ return {
 
       require("luasnip.loaders.from_vscode").lazy_load()
 
+      local ls = luasnip
+      local s = ls.snippet
+      local t = ls.text_node
+      local i = ls.insert_node
+
+      ls.add_snippets("cs", {
+        s("mono", {
+          t("using UnityEngine;"),
+          t({ "", "", "namespace " }), i(1, "Namespace"),
+          t({ "", "{", "\tpublic class " }), i(2, "ClassName"), t(" : MonoBehaviour"),
+          t({ "", "\t{", "\t\t" }), i(3),
+          t({ "", "\t}", "}" }),
+        }),
+      })
+
       cmp.setup({
         snippet = {
           expand = function(args)
